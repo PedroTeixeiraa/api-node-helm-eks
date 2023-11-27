@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: pedrinho9/api-node-helm-eks
-  tag: "2.0"
+  tag: latest
   pullPolicy: IfNotPresent
 
 service:

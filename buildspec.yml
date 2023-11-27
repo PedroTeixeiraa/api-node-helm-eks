@@ -19,7 +19,7 @@ phases:
       - aws eks --region $REGION update-kubeconfig --name node-api
   build:
     commands:
-      - aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin 945952216210.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 945952216210.dkr.ecr.us-east-1.amazonaws.com
       - docker build -t node-api .
       - docker tag node-api:latest 945952216210.dkr.ecr.us-east-1.amazonaws.com/node-api:latest
       - docker push 945952216210.dkr.ecr.us-east-1.amazonaws.com/node-api:latest
