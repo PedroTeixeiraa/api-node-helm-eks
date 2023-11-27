@@ -25,4 +25,4 @@ phases:
       # - docker push 945952216210.dkr.ecr.us-east-1.amazonaws.com/node-api:latest
   post_build:
     commands:
-      - helm upgrade --install nodeserver charts/api-node-helm-eks/values.yaml
+      - helm upgrade --install nodeserver charts/api-node-helm-eks 
