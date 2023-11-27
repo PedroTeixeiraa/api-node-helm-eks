@@ -1,0 +1,35 @@
+name: CI/CD Pipeline
+
+on: [push]
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: AWS ECR Login
+        run: |
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 945952216210.dkr.ecr.sua-regiao.amazonaws.com
+
+      # - name: Build and Push Docker Image to ECR
+      #   run: |
+      #     docker build -t sua-conta.dkr.ecr.sua-regiao.amazonaws.com/sua-aplicacao:latest .
+      #     docker push sua-conta.dkr.ecr.sua-regiao.amazonaws.com/sua-aplicacao:latest
+
+      
