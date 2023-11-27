@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  variables:
+    REGION: "us-east-1"
+
 phases:
   pre_build:
     commands:
@@ -11,6 +15,8 @@ phases:
       - chmod +x kubectl
       - mv kubectl /usr/local/bin
       - kubectl version --client
+      - aws eks --region $REGION update-kubeconfig --name node-api
+      - kubectl get pods
   build:
     commands:
       - echo "build"
