@@ -15,6 +15,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -25,7 +32,7 @@ jobs:
 
       - name: AWS ECR Login
         run: |
-          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 945952216210.dkr.ecr.sua-regiao.amazonaws.com
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_USER }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
       # - name: Build and Push Docker Image to ECR
       #   run: |
