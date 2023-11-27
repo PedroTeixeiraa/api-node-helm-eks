@@ -7,6 +7,7 @@ env:
 phases:
   pre_build:
     commands:
+      - npm install
       - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
       - chmod 700 get_helm.sh
       - ./get_helm.sh
@@ -16,10 +17,12 @@ phases:
       - mv kubectl /usr/local/bin
       - kubectl version --client
       - aws eks --region $REGION update-kubeconfig --name node-api
-      - kubectl get pods
   build:
     commands:
-      - echo "build"
+      - aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin 945952216210.dkr.ecr.us-east-1.amazonaws.com
+      - docker build -t node-api .
+      - docker tag node-api:latest 945952216210.dkr.ecr.us-east-1.amazonaws.com/node-api:latest
+      - docker push 945952216210.dkr.ecr.us-east-1.amazonaws.com/node-api:latest
   post_build:
     commands:   
       - echo "post_build"
